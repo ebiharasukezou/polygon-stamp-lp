@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Polygon Talk - 大人のためのLINEスタンプ</title>
+    <style>
+        /* ベースリセット */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', 'Noto Sans JP', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-attachment: fixed;
+            color: #333;
+            line-height: 1.8;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        
+        /* 浮遊する図形 */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .shape {
+            position: absolute;
+            opacity: 0.15;
+        }
+        
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            background: #ff6b9d;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            top: 10%;
+            left: 10%;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .shape:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            background: #ffd93d;
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            top: 60%;
+            right: 15%;
+            animation: float 15s infinite ease-in-out 2s;
+        }
+        
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            background: #6bcf7f;
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            bottom: 20%;
+            left: 20%;
+            animation: float 18s infinite ease-in-out 4s;
+        }
+        
+        .shape:nth-child(4) {
+            width: 90px;
+            height: 90px;
+            background: #4facfe;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            top: 30%;
+            right: 25%;
+            animation: float 22s infinite ease-in-out 1s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, -30px) rotate(90deg); }
+            50% { transform: translate(0, -60px) rotate(180deg); }
+            75% { transform: translate(-30px, -30px) rotate(270deg); }
+        }
+        
+        /* ヘッダー */
+        .header {
+            background: linear-gradient(135deg, #ff6b9d 0%, #ffa07a 100%);
+            color: white;
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        .header::before {
+            content: '🔷';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            top: -50px;
+            right: -50px;
+            animation: spin 20s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header h1 {
+            font-size: clamp(2.5em, 6vw, 4em);
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: bounce 2s ease-in-out infinite;
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .tagline {
+            font-size: clamp(1em, 2.5vw, 1.3em);
+            color: #fff;
+            margin-top: 20px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        /* メインコンテンツ */
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .concept {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            margin-bottom: 60px;
+            text-align: left;
+            transform: rotate(-1deg);
+            transition: all 0.3s ease;
+            border: 4px solid #ffd93d;
+        }
+        
+        .concept:hover {
+            transform: rotate(0deg) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        
+        .concept h2 {
+            font-size: clamp(1.5em, 3.5vw, 2em);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+            font-weight: 900;
+            line-height: 1.4;
+        }
+        
+        .concept p {
+            font-size: 1.1em;
+            color: #555;
+            line-height: 2;
+            font-weight: 500;
+        }
+        
+        /* ビジュアルセクション */
+        .visual {
+            margin: 60px 0;
+            position: relative;
+            transform: rotate(1deg);
+            transition: transform 0.3s ease;
+        }
+        
+        .visual:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+        
+        .visual-placeholder {
+            background: linear-gradient(135deg, #ffd93d 0%, #ff6b9d 50%, #667eea 100%);
+            aspect-ratio: 16/9;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+            font-weight: 900;
+            letter-spacing: 3px;
+            box-shadow: 0 20px 60px rgba(255, 107, 157, 0.4);
+            overflow: hidden;
+            position: relative;
+            border: 5px solid white;
+        }
+        
+        .visual-placeholder::after {
+            content: '✨';
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.3;
+            animation: pulse-emoji 2s infinite;
+        }
+        
+        @keyframes pulse-emoji {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.6; }
+        }
+        
+        .visual img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            border: 5px solid white;
+        }
+        
+        /* CTAセクション */
+        .call-to-action {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            margin-bottom: 60px;
+            border: 4px solid #ff6b9d;
+            transform: rotate(-1deg);
+            transition: transform 0.3s ease;
+        }
+        
+        .call-to-action:hover {
+            transform: rotate(0deg);
+        }
+        
+        .call-to-action h3 {
+            color: #1a1a1a;
+            font-size: clamp(1.8em, 4.5vw, 2.5em);
+            margin-bottom: 30px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+        
+        .buttons {
+            margin: 40px 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ffa07a 100%);
+            color: white;
+            padding: 22px 50px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 1.2em;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+            position: relative;
+            text-transform: uppercase;
+            border: 3px solid white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6);
+            animation: wiggle 0.5s ease-in-out;
+        }
+        
+        @keyframes wiggle {
+            0%, 100% { transform: translateY(-5px) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(-5deg); }
+            75% { transform: translateY(-5px) rotate(5deg); }
+        }
+        
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* QRコード */
+        .qr-code {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 3px dashed #ffd93d;
+        }
+        
+        .qr-code p {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        
+        .qr-placeholder {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 5px solid white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 900;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transform: rotate(-3deg);
+            transition: transform 0.3s ease;
+        }
+        
+        .qr-placeholder:hover {
+            transform: rotate(0deg) scale(1.1);
+        }
+        
+        .qr-code img {
+            width: 180px;
+            height: 180px;
+            border: 5px solid white;
+            border-radius: 20px;
+            padding: 10px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        /* 詳細セクション */
+        .detail {
+            background: linear-gradient(135deg, #ffd93d 0%, #ffa07a 100%);
+            color: white;
+            padding: 50px 40px;
+            border-radius: 30px;
+            margin-bottom: 40px;
+            text-align: left;
+            border: 4px solid white;
+            transform: rotate(1deg);
+            box-shadow: 0 15px 50px rgba(255, 217, 61, 0.3);
+        }
+        
+        .detail h4 {
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .detail p {
+            font-size: 1.15em;
+            line-height: 2;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        /* フッター */
+        .footer {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            font-size: 1em;
+            letter-spacing: 2px;
+            font-weight: 600;
+            clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+            margin-top: 60px;
+        }
+        
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .header {
+                padding: 80px 20px;
+            }
+            
+            .concept, .call-to-action, .detail {
+                padding: 40px 25px;
+                transform: rotate(0deg);
+            }
+            
+            .content {
+                padding: 40px 15px;
+            }
+            
+            .shape {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    
+    <header class="header">
+        <div class="header-content">
+            <h1>Minimal Polygon Talk</h1>
+            <p class="tagline">Design for Sophisticated Communication ✨</p>
+        </div>
+    </header>
+    
+    <main class="content">
+        <section class="concept">
+            <h2>削ぎ落とす美学。面で伝える、研ぎ澄まされた感情。</h2>
+            <p>
+                従来の感情的なスタンプの制約を、ポリゴンという抽象的・幾何学的なデザイン言語で打破します。
+                大人の美意識とコミュニケーションの効率性を一切妥協しない、新しいデジタル言語です。
+            </p>
+        </section>
+        
+        <div class="visual">
+            <div class="visual-placeholder">
+                ✨ スタンプ ✨
+            </div>
+            <!-- 実際の画像がある場合は以下のコメントを外してください
+            <img src="main_visual.png" alt="Minimal Polygon Talk LINEスタンプメイン画像">
+            -->
+        </div>
+        
+        <section class="call-to-action">
+            <h3>もう、シンプルなスタンプしか使えない。</h3>
+            <div class="buttons">
+                <a href="#" class="btn">
+                    <span>🎨 今すぐダウンロード 🎨</span>
+                </a>
+            </div>
+            
+            <div class="qr-code">
+                <p>📱 またはQRコードでアクセス 📱</p>
+                <div class="qr-placeholder">QRコード</div>
+                <!-- 実際のQRコード画像がある場合は以下のコメントを外してください
+                <img src="qr_code.png" alt="LINEスタンプQRコード">
+                -->
+            </div>
+        </section>
+        
+        <section class="detail">
+            <h4>🎯 ターゲット：デザイン感度の高い20代〜30代社会人</h4>
+            <p>クールな返答が必要な時、文字を打つ手間を省き、デザイン性を保ったまま迅速な意思表示を可能にします。</p>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <p>© 2025 卒業制作プロジェクト 🎓✨</p>
+    </footer>
+</body>
+</html>
