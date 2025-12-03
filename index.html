@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Polygon - Ethereal Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Zen+Kaku+Gothic+New:wght@300;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Ambient Background -->
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <header class="header glass">
+        <div class="container">
+            <h1 class="logo">MINIMAL POLYGON</h1>
+            <nav class="nav">
+                <a href="#concept">Concept</a>
+                <a href="#features">Features</a>
+                <a href="#download" class="btn-glass-nav">Download</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <span class="badge-glass">New Release</span>
+                    <h2 class="hero-title">Translucent<br>Communication</h2>
+                    <p class="hero-desc">
+                        言葉よりも透明で、<br>
+                        形よりも自由な。<br>
+                        大人のための、新しいスタンプ体験。
+                    </p>
+                    <a href="#download" class="btn-glass-primary">View Collection</a>
+                </div>
+                <div class="hero-visual">
+                    <div class="prism-card glass floating">
+                        <img src="main_visual.png" alt="Main Visual" class="hero-img">
+                        <div class="shine"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="concept" class="section concept">
+            <div class="container">
+                <div class="glass-card concept-card reveal-up">
+                    <div class="section-header">
+                        <h3 class="section-title">CONCEPT</h3>
+                        <p class="section-subtitle">透明な美学</p>
+                    </div>
+                    <p class="concept-text">
+                        幾何学的な「ポリゴン」を、<br>
+                        すりガラスの向こう側に。<br>
+                        <br>
+                        主張しすぎない、けれど確かな存在感。<br>
+                        あなたの会話に、洗練された彩りを添えます。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section features">
+            <div class="container">
+                <div class="section-header">
+                    <h3 class="section-title">FEATURES</h3>
+                    <p class="section-subtitle">特徴</p>
+                </div>
+                <div class="feature-grid">
+                    <div class="glass-card feature-card reveal-up" style="transition-delay: 0.1s;">
+                        <div class="icon-box">
+                            <div class="polygon-icon diamond"></div>
+                        </div>
+                        <h4>Minimal</h4>
+                        <p>余計な線を削ぎ落とした<br>究極のシンプル</p>
+                    </div>
+                    <div class="glass-card feature-card reveal-up" style="transition-delay: 0.2s;">
+                        <div class="icon-box">
+                            <div class="polygon-icon hexagon"></div>
+                        </div>
+                        <h4>Ethereal</h4>
+                        <p>空気のように馴染む<br>透明感のある色彩</p>
+                    </div>
+                    <div class="glass-card feature-card reveal-up" style="transition-delay: 0.3s;">
+                        <div class="icon-box">
+                            <div class="polygon-icon triangle"></div>
+                        </div>
+                        <h4>Smart</h4>
+                        <p>知性を感じさせる<br>幾何学的なフォルム</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="section download">
+            <div class="container">
+                <div class="glass-card download-card reveal-up">
+                    <div class="download-content">
+                        <div class="text-area">
+                            <h3>Available Now</h3>
+                            <p>LINE STOREにて配信中</p>
+                            <a href="#" class="btn-glass-primary btn-large">
+                                <span>LINE STORE</span>
+                                <div class="glow"></div>
+                            </a>
+                        </div>
+                        <div class="qr-area">
+                            <div class="qr-frame glass">
+                                <img src="qr_code.png" alt="QR Code">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Minimal Polygon Project.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple scroll reveal
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+
+</html>
