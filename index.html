@@ -30,6 +30,11 @@
                 <a href="#features">Features</a>
                 <a href="#download" class="btn-glass-nav">Download</a>
             </nav>
+            <button class="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
@@ -134,20 +139,7 @@
         </div>
     </footer>
 
-    <script>
-        // Simple scroll reveal
-        document.addEventListener('DOMContentLoaded', () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('in-view');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
